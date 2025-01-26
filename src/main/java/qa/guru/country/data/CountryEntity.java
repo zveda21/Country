@@ -11,7 +11,7 @@ import java.util.UUID;
 public class CountryEntity {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "country_name")
