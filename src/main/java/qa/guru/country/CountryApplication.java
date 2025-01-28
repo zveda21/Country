@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import qa.guru.country.domain.Country;
-import qa.guru.country.domain.graphql.CountryInputGql;
 import qa.guru.country.service.CountryService;
 
 import java.util.Date;
