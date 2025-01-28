@@ -1,0 +1,71 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="country"
+           targetNamespace="country" elementFormDefault="qualified">
+
+    <!-- REQUEST TYPES -->
+    <xs:element name="idRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="allRequest" type="xs:anyType"> </xs:element>
+
+    <xs:element name="addRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="countryInputRequest" type="tns:countryInputRequestType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="countryInputRequest" type="tns:countryInputRequestType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Define countryInputRequestType -->
+    <xs:complexType name="countryInputRequestType">
+        <xs:sequence>
+            <xs:element name="countryName" type="xs:string"/>
+            <xs:element name="countryCode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- RESPONSE TYPES -->
+
+    <xs:element name="countryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="country" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="countriesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="countries" type="tns:country" minOccurs="0" maxOccurs="unbounded">
+                </xs:element>
+                <xs:element name="totalElements" type="xs:long" minOccurs="0"/>
+                <xs:element name="totalPages" type="xs:int" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- CUSTOM TYPES -->
+
+    <xs:complexType name="country">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="countryName" type="xs:string"/>
+            <xs:element name="countryCode" type="xs:string"/>
+            <xs:element name="independenceDate" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
