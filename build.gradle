@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'com.github.edeandrea.xjc-generation' version '1.6'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 group = 'guru.qa'
@@ -16,6 +17,13 @@ java {
 
 repositories {
     mavenCentral()
+    maven {url 'https://repo.spring.io/milstone'}
+    maven {url 'https://repo.spring.io/snapshot'}
+}
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.grpc:spring-grpc-dependencies:0.4.0-SNAPSHOT'
+    }
 }
 
 dependencies {
@@ -33,6 +41,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.postgresql:postgresql:42.2.5'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    implementation 'org.springframework.grpc:spring-grpc-spring-boot-starter'
+    implementation "com.google.protobuf:protobuf-java-util:${dependencyManagement.importedProperties['protobuf-java.version']}"
+    implementation 'io.grpc:grpc-services'
     implementation 'com.tailrocks.graphql:graphql-datetime-spring-boot-starter:6.0.0'
 
 }
@@ -54,6 +65,25 @@ sourceSets {
         java {
             srcDir('src/main/java')
             srcDir("$buildDir/generated-sources/main/xjc")
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${dependencyManagement.importedProperties['protobuf-java.version']}"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${dependencyManagement.importedProperties['grpc.version']}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                option 'jakarta_omit'
+                option '@generated=omit'
+            }
         }
     }
 }
